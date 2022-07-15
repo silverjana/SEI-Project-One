@@ -1,0 +1,89 @@
+
+*{
+  box-sizing:border-box;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: wheat;
+  display: flex;
+  justify-content: center;
+  
+
+}
+
+main {
+  width: 75vh;
+  background-color: cadetblue;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+button {
+  height: 3vh;
+}
+
+.grid{
+  display: flex;
+  width: 70vh;
+  height: 70vh;
+  flex-wrap: wrap;
+}
+
+.grid div {
+  background-color: lightblue;
+  height: 10%;
+  width: 10%;
+  border: 1px solid lightsteelblue;
+
+}
+
+/* .grid div:first-of-type {
+
+} */
+
+
+/* ANIMATION */
+
+
+.player {
+  background-image: url(../images/eleven.jpg);
+  background-size: cover;
+}
+	
+.demogorgon {
+  background-image: url(../images/demogorgon.jpg);
+  background-size: cover;
+}
+	
+.explosion {
+  background-image: url(../images/explosion.jpeg);
+  background-size: cover;
+}
+	
+.laser {
+  background-image: url(../images/laser_yellow.png);
+  background-size: cover;
+}
+
+.bomb {
+  background-image: url(../images/laser_red.png);
+  background-size: cover;
+}
+
+
+
+
+
+
+
+
