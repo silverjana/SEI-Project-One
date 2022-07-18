@@ -14,6 +14,8 @@ function init() {
   document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
 
+  document.addEventListener('keydown', laserMovement)
+  document.addEventListener('keydown', newLaser)
 
 
   //!EXECUTION
@@ -45,6 +47,10 @@ function init() {
   })
   let enemyDir = 'goright'   //start going right
 
+  //shooting lasers
+  const laserClass = 'laser'
+  const laserArr = []
+
   //score
   const enemyPoints = 100//each enemy
   let currentScore = 0 // to be added to + displayed
@@ -73,7 +79,7 @@ function init() {
     console.log('grid function ok')
 
     //place player + enemies on grid
-    addPlayer(playerCurrentPosition)
+    addItem(playerCurrentPosition, playerClass )
 
     placeEnemy() 
 
@@ -87,6 +93,7 @@ function init() {
     })
   }
 
+  //move enemy
   let movesDownCounter = 0
   function moveEnemyKeys(){  //testing movement with any key instead of timer
     
@@ -109,11 +116,11 @@ function init() {
     })
     
     //check borders
-    if (enemies.filter(item => item.position % width === width - 1 ).length > 0){  // touches right
+    if (enemies.filter(item => item.position % width === width - 1 ).length > 0){  // at least one element exist that touches right
       enemyDir = 'touchright'
       movesDownCounter += 1
       console.log('something touches right!')
-    } else if (enemies.filter(item => item.position % width === 0 ).length > 0){ // touches left
+    } else if (enemies.filter(item => item.position % width === 0 ).length > 0){ // " " " touches left
       enemyDir = 'touchleft'
       movesDownCounter += 1
     }
@@ -133,15 +140,13 @@ function init() {
   //   /* vendors contains the element we're looking for */
   // }
 
-
-
-  // add player
-  function addPlayer(position){
-    cells[position].classList.add(playerClass)
+  // add Item
+  function addItem(position,item){
+    cells[position].classList.add(item)
   }
-  // remove player
-  function removePlayer(position){
-    cells[position].classList.remove(playerClass)
+  // removeItem
+  function removeItem(position, item){
+    cells[position].classList.remove(item)
   }
   //move player with 2 keys inside last row
   function movePlayer(event){
@@ -150,7 +155,7 @@ function init() {
     const right = 39
     const left = 37
 
-    removePlayer(playerCurrentPosition)
+    removeItem(playerCurrentPosition, playerClass)
 
     if (left === keyPressed && playerCurrentPosition % width !== 0 ) {
       console.log('move left ok')
@@ -160,14 +165,51 @@ function init() {
       playerCurrentPosition += 1
     }
 
-    addPlayer(playerCurrentPosition)
+    addItem(playerCurrentPosition, playerClass)
 
   }
 
-  // player shoots laser
-  
+  //? player shoots laser  
 
+  // laser moves 1 up every tick, now with keys
+  function laserMovement(){
+    console.log('laser movement go')
+    //remove
+    laserArr.forEach((item) => {
+      cells[item['position']].classList.remove(laserClass)
+    })
 
+    //update position
+    laserArr.forEach((item,i) => {
+      if (item.position < width){
+        laserArr.splice(i, 1)
+      } else{
+        console.log(item.position + 'before update')
+        item['position'] = item['position'] - width
+        console.log('moved to' + item.position)
+      }
+    })
+
+    // add again
+    laserArr.forEach((item) => {
+      cells[item['position']].classList.add(laserClass)
+    })
+  } 
+
+  function newLaser(event){ 
+    //grab key pressed
+    const keyPressed = event.keyCode
+    const spaceKey = 32
+    const firedLocation = playerCurrentPosition - width 
+    console.log(firedLocation + 'firedlocation')
+    // if space pressed and cell free, add laser, push item into laserArray 
+    if ( spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)){
+      addItem(firedLocation, laserClass) 
+      laserArr.push({ position: playerCurrentPosition - width, index: laserArr.length })
+
+      console.log(laserArr)
+    }
+  } 
 
 
 }
