@@ -25,7 +25,6 @@ function init() {
   const cells = []
 
   //player position
-
   const PlayerStartingPosition = 95
   let playerCurrentPosition = PlayerStartingPosition
   const playerClass = 'player'
@@ -41,26 +40,26 @@ function init() {
   const enemyStartingPosition = [1,2,3]// array of starting positions
   // put for every position an alien as an object in array, with position and index as keys
   enemyStartingPosition.forEach((item, i) => {
-    enemies[i] = {position: enemyStartingPosition[i],index: i }
+    enemies[i] = { position: enemyStartingPosition[i],index: i }
     console.log(enemies)
   })
   let enemyDir = 'goright'   //start going right
 
   //score
-
   const enemyPoints = 100//each enemy
   let currentScore = 0 // to be added to + displayed
   //high score -  local storage -> mole
 
+
+  //lives
   const lives = 3
   livesSpan.innerHTML = lives
-
 
 
   //? FUNCTIONS
 
   function createGrid(){
-    for(let i = 0; i < cellCount; i++){
+    for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
       // Add innerText to cell for development purposes
       cell.innerText = i
@@ -72,7 +71,10 @@ function init() {
       grid.appendChild(cell)
     }
     console.log('grid function ok')
-    
+
+    //place player + enemies on grid
+    addPlayer(playerCurrentPosition)
+
     placeEnemy() 
 
   }
@@ -86,19 +88,18 @@ function init() {
   }
 
   let movesDownCounter = 0
-
-  function moveEnemyKeys(){  //testing movement
+  function moveEnemyKeys(){  //testing movement with any key instead of timer
     
     //remove class for all
     enemies.forEach((item) => {
       cells[item['position']].classList.remove(enemyClass)
     })
 
-    // move sideways or down
+    // move aliens sideways or down
     enemies.forEach((item) => {
       if (enemyDir === 'touchright' || enemyDir === 'touchleft'){
         item['position'] = item['position'] + width
-      }else if ( enemyDir === 'goleft'){
+      } else if ( enemyDir === 'goleft'){
         item['position'] = item['position'] - 1
       } else if ( enemyDir === 'goright'){
         item['position'] = item['position'] + 1
@@ -107,12 +108,12 @@ function init() {
       cells[item['position']].classList.add(enemyClass)
     })
     
-    //check borders AFTER MOVING
+    //check borders
     if (enemies.filter(item => item.position % width === width - 1 ).length > 0){  // touches right
       enemyDir = 'touchright'
       movesDownCounter += 1
       console.log('something touches right!')
-    } else if (enemies.filter(item => item.position% width === 0 ).length > 0){ // touches left
+    } else if (enemies.filter(item => item.position % width === 0 ).length > 0){ // touches left
       enemyDir = 'touchleft'
       movesDownCounter += 1
     }
@@ -126,8 +127,6 @@ function init() {
     }
     console.log(enemyDir)
 
-
-
   }
 
   // if (vendors.filter(e => e.Name === 'Magenic').length > 0) {
@@ -135,30 +134,6 @@ function init() {
   // }
 
 
-// Remove cat from current position
-//     removeCat(currentPosition)
-
-//     // Check the keyCode on the event and match with the direction
-//     } else if (down === keyCode && currentPosition + width <= cellCount - 1){
-//       console.log('CLICKED DOWN')
-//       currentPosition += width
-//     } else if (left === keyCode && currentPosition % width !== 0){
-//       console.log('CLICKED LEFT')
-//       console.log(currentPosition % width)
-//       currentPosition -= 1
-//     } else if (right === keyCode && currentPosition % width !== width - 1){
-//       console.log('CLICKED RIGHT')
-//       currentPosition += 1
-//     } else {
-//       console.log('INVALID KEY')
-//     }
-
-//     addCat(currentPosition)
-
-
-
-//place player on grid
-  addPlayer(playerCurrentPosition)
 
   // add player
   function addPlayer(position){
@@ -188,6 +163,10 @@ function init() {
     addPlayer(playerCurrentPosition)
 
   }
+
+  // player shoots laser
+  
+
 
 
 
