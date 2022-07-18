@@ -11,7 +11,8 @@ function init() {
 
   //!EVENTS
   //startButton.addEventListener('click', startGame) 
-  document.addEventListener('keydown', moveEnemyRight) //listen for keys
+  //document.addEventListener('keydown', moveEnemyRight) //listen for keys
+  document.addEventListener('keydown', movePlayer)
 
 
 
@@ -27,6 +28,7 @@ function init() {
 
   const PlayerStartingPosition = 95
   let playerCurrentPosition = PlayerStartingPosition
+  const playerClass = 'player'
 
   //enemy choice 
   const enemyChoice = ['demogorgon', 'mindFlayer'] //array with available enemies
@@ -42,7 +44,7 @@ function init() {
     enemies[i] = {position: enemyStartingPosition[i],index: i }
     console.log(enemies)
   })
-
+  let enemyDir = +1
 
   //score
 
@@ -70,7 +72,9 @@ function init() {
       grid.appendChild(cell)
     }
     console.log('grid function ok')
-    placeEnemy()
+    
+    placeEnemy() 
+
   }
   createGrid()
 
@@ -82,23 +86,85 @@ function init() {
   }
 
   function moveEnemyRight(){  //testing movement
-
+    
     enemies.forEach((item) => {
       cells[item['position']].classList.remove(enemyClass)
     })
+
+    
     // IF loop for each direction it moves
     enemies.forEach((item, i) => {
-      item['position'] = item['position'] + 1 // change number
+      
+     
+      item['position'] = item['position'] + enemyDir // change number
+
+      if (item.position % width === width - 1 ){
+        console.log('touchesright')
+      }
+
       cells[item['position']].classList.add(enemyClass)
     })
 
   }
 
+  // if (vendors.filter(e => e.Name === 'Magenic').length > 0) {
+  //   /* vendors contains the element we're looking for */
+  // }
+
+
+// Remove cat from current position
+//     removeCat(currentPosition)
+
+//     // Check the keyCode on the event and match with the direction
+//     } else if (down === keyCode && currentPosition + width <= cellCount - 1){
+//       console.log('CLICKED DOWN')
+//       currentPosition += width
+//     } else if (left === keyCode && currentPosition % width !== 0){
+//       console.log('CLICKED LEFT')
+//       console.log(currentPosition % width)
+//       currentPosition -= 1
+//     } else if (right === keyCode && currentPosition % width !== width - 1){
+//       console.log('CLICKED RIGHT')
+//       currentPosition += 1
+//     } else {
+//       console.log('INVALID KEY')
+//     }
+
+//     addCat(currentPosition)
 
 
 
+//place player on grid
+  addPlayer(playerCurrentPosition)
 
+  // add player
+  function addPlayer(position){
+    cells[position].classList.add(playerClass)
+  }
+  // remove player
+  function removePlayer(position){
+    cells[position].classList.remove(playerClass)
+  }
+  //move player with 2 keys
+  function movePlayer(event){
+    // get keys
+    const keyPressed = event.keyCode
+    const right = 39
+    const left = 37
 
+    removePlayer(playerCurrentPosition)
+
+    if (left === keyPressed && playerCurrentPosition % width !== 0 ) {
+      console.log('move left ok')
+      playerCurrentPosition -= 1
+    } else if ( right === keyPressed && playerCurrentPosition % width !== width - 1){
+      console.log('move right ok')
+      playerCurrentPosition += 1
+    }
+
+    addPlayer(playerCurrentPosition)
+
+  }
 
 
 
