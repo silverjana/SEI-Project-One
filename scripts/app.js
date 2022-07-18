@@ -11,7 +11,7 @@ function init() {
 
   //!EVENTS
   //startButton.addEventListener('click', startGame) 
-  //document.addEventListener('keydown', moveEnemyRight) //listen for keys
+  document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
 
 
@@ -44,7 +44,7 @@ function init() {
     enemies[i] = {position: enemyStartingPosition[i],index: i }
     console.log(enemies)
   })
-  let enemyDir = +1
+  let enemyDir = 'goright'   //start going right
 
   //score
 
@@ -79,31 +79,54 @@ function init() {
   createGrid()
 
   function placeEnemy(){  // place enemies on grid at start
-    enemies.forEach((item, i) => {
+    enemies.forEach((item) => {
       cells[item.position].classList.add(enemyClass)
       console.log(item.position)
     })
   }
 
-  function moveEnemyRight(){  //testing movement
+  let movesDownCounter = 0
+
+  function moveEnemyKeys(){  //testing movement
     
+    //remove class for all
     enemies.forEach((item) => {
       cells[item['position']].classList.remove(enemyClass)
     })
 
-    
-    // IF loop for each direction it moves
-    enemies.forEach((item, i) => {
-      
-     
-      item['position'] = item['position'] + enemyDir // change number
-
-      if (item.position % width === width - 1 ){
-        console.log('touchesright')
+    // move sideways or down
+    enemies.forEach((item) => {
+      if (enemyDir === 'touchright' || enemyDir === 'touchleft'){
+        item['position'] = item['position'] + width
+      }else if ( enemyDir === 'goleft'){
+        item['position'] = item['position'] - 1
+      } else if ( enemyDir === 'goright'){
+        item['position'] = item['position'] + 1
       }
-
+      console.log(enemyDir)
       cells[item['position']].classList.add(enemyClass)
     })
+    
+    //check borders AFTER MOVING
+    if (enemies.filter(item => item.position % width === width - 1 ).length > 0){  // touches right
+      enemyDir = 'touchright'
+      movesDownCounter += 1
+      console.log('something touches right!')
+    } else if (enemies.filter(item => item.position% width === 0 ).length > 0){ // touches left
+      enemyDir = 'touchleft'
+      movesDownCounter += 1
+    }
+    // after moving down once, move sideways next
+    if (enemyDir === 'touchright' && movesDownCounter > 1){
+      enemyDir = 'goleft'
+      movesDownCounter = 0
+    } else if (enemyDir === 'touchleft' && movesDownCounter > 1 ){
+      enemyDir = 'goright'
+      movesDownCounter = 0
+    }
+    console.log(enemyDir)
+
+
 
   }
 
@@ -145,7 +168,7 @@ function init() {
   function removePlayer(position){
     cells[position].classList.remove(playerClass)
   }
-  //move player with 2 keys
+  //move player with 2 keys inside last row
   function movePlayer(event){
     // get keys
     const keyPressed = event.keyCode
