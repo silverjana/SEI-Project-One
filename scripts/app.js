@@ -63,7 +63,7 @@ function init() {
 
 
   //lives
-  const lives = 3
+  let lives = 3
   livesSpan.innerHTML = lives
 
   //timer
@@ -106,7 +106,7 @@ function init() {
     const keyPressed = event.keyCode
     const spaceKey = 32
     const firedLocation = playerCurrentPosition - width
-    console.log(firedLocation + 'firedlocation')
+    //console.log(firedLocation + 'firedlocation')
     // if space pressed and cell free, add laser, push item into laserArray 
     if (spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)) {
       addItem(firedLocation, laserClass)
@@ -174,9 +174,22 @@ function init() {
           } else if (enemyDir === 'goright') {
             item['position'] = item['position'] + 1
           }
+
+
           //add class again
           cells[item['position']]?.classList.add(enemyClass)
         })
+
+        if (enemies.some(item => item.position >= width * width - width)) {
+          //} else if (enemies.filter(item => item.position > (width * width - 1)).length > 0) {// in last row - end of game
+          console.log('GAME OVER')
+          alert('GAME OVER')
+          clearInterval(timer)
+
+          //! stuff to happen after
+        }
+
+
         console.log('enemies', enemies.map(e => e.position))
         //check borders
         if (enemies.filter(item => item.position % width === width - 1).length > 0) {  // at least one element exist that touches right
@@ -186,12 +199,9 @@ function init() {
         } else if (enemies.filter(item => item.position % width === 0).length > 0) { // " " " touches left
           enemyDir = 'touchleft'
           movesDownCounter += 1
-        } else if (enemies.every(item => item.position > (width * width - width))) {
-          //} else if (enemies.filter(item => item.position > (width * width - 1)).length > 0) {// in last row - end of game
-          console.log('GAME OVER')
-          clearInterval(timer)    //! doesn-t work
-          console.log('GAMEOVER')  //! doesn-t work
         }
+
+
 
         // after moving down once, move sideways next
         if (enemyDir === 'touchright' && movesDownCounter > 1) {
@@ -219,7 +229,7 @@ function init() {
 
         //update position
         laserArr.forEach((item, i) => {
-          console.log(item) // 
+          //console.log(item) // 
           if (item.position < width) { // remove it if reaches top of grid
             item.position = -1
 
@@ -229,6 +239,12 @@ function init() {
             item.position = -1  // delete this laser
             enemies = enemies.filter(item => item.position !== posit) // delete this alien from arr
             cells[posit].classList.remove(enemyClass)// delete enemy class from this cell
+
+            if (enemies.length === 0) { // no more enemies left
+              console.log('ALL ENEMIES KILLED')
+              clearInterval(timer)
+              //! screen/new level here
+            }
 
           } else if (bombArr.filter(bomb => bomb.position === item.position).length > 0) {  //! check
             const posit = item.position
@@ -268,6 +284,19 @@ function init() {
           } else {
             item.position = item.position + width //move one down
           }
+
+          if (playerCurrentPosition === item.position) { // there is the player in new position 
+            console.log('PLAYER HIT!')
+            const posit = item.position
+            item.position = 100  // delete this bomb
+            lives -= 1 // player has 1 less life
+            livesSpan.innerHTML = lives
+            if (lives === 0) {
+              console.log('GAME OVER 0 LIVES')
+              clearInterval(timer)
+            }
+          }
+
         })
 
         // add again
@@ -282,7 +311,7 @@ function init() {
         //console.log(enemies[rate].position + width)
         const enemyFiredLoc = enemies[rate]?.position + width
         //console.log(enemyFiredLoc + 'fireloc')
-        if (rate < enemies.length && !cells[enemyFiredLoc].classList.contains(enemyClass)) {//if there is no enemy below
+        if (!enemies.some(item => item.position >= width * width - width * 2) && rate < enemies.length && !cells[enemyFiredLoc].classList.contains(enemyClass)) {//if enemy is not in last row, and if there is no enemy below
           addItem(enemyFiredLoc, bombClass) //add class
           bombArr.push({ position: enemyFiredLoc }) // put in array with location
           //console.log(bombArr)
@@ -291,7 +320,7 @@ function init() {
       newBomb()
 
 
-    }, 200)
+    }, 1000)
 
 
   }
