@@ -35,15 +35,15 @@ function init() {
   const enemyChoice = ['demogorgon', 'mindFlayer'] //array with available enemies
 
   let enemyClass = enemyChoice[0] // must change: array of enemies
-  console.log(enemyClass)
+  console.log(enemyClass + 'enemyclass')
 
   //enemy positions 
-  const enemies = []
+  let enemies = []
   const enemyStartingPosition = [1,2,3]// array of starting positions
   // put for every position an alien as an object in array, with position and index as keys
   enemyStartingPosition.forEach((item, i) => {
-    enemies[i] = { position: enemyStartingPosition[i],index: i }
-    console.log(enemies)
+    enemies[i] = { position: enemyStartingPosition[i],ind: i }
+    console.log(enemies )
   })
   let enemyDir = 'goright'   //start going right
 
@@ -164,7 +164,6 @@ function init() {
       console.log('move right ok')
       playerCurrentPosition += 1
     }
-
     addItem(playerCurrentPosition, playerClass)
 
   }
@@ -176,16 +175,27 @@ function init() {
     console.log('laser movement go')
     //remove
     laserArr.forEach((item) => {
+      console.log(item)
       cells[item['position']].classList.remove(laserClass)
     })
 
     //update position
     laserArr.forEach((item,i) => {
-      if (item.position < width){
+      console.log(item) // 
+      if (item.position < width){ // remove it if reaches top of grid
         laserArr.splice(i, 1)
-      } else{
-        console.log(item.position + 'before update')
-        item['position'] = item['position'] - width
+
+      } else if (enemies.filter(alien => alien.position === item.position ).length > 0){ // there is an enemy in that position 
+        console.log('BOTH HERE!')
+        laserArr.splice(i,1) // delete this laser
+        const posit = item.position
+        console.log(posit)
+        enemies = enemies.filter(item => item.position !== posit) // delete this alien from arr
+        cells[posit].classList.remove(enemyClass)// delete enemy class from this cell
+
+      } else {
+        console.log(item.position + 'before update') 
+        item['position'] = item['position'] - width //move one up
         console.log('moved to' + item.position)
       }
     })
@@ -201,15 +211,18 @@ function init() {
     const keyPressed = event.keyCode
     const spaceKey = 32
     const firedLocation = playerCurrentPosition - width 
-    console.log(firedLocation + 'firedlocation')
+    console.log(firedLocation + 'firedlocation') 
     // if space pressed and cell free, add laser, push item into laserArray 
     if ( spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)){
       addItem(firedLocation, laserClass) 
-      laserArr.push({ position: playerCurrentPosition - width, index: laserArr.length })
+      laserArr.push({ position: playerCurrentPosition - width, ind: laserArr.length })
 
       console.log(laserArr)
     }
   } 
+
+
+
 
 
 }
