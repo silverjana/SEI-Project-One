@@ -14,7 +14,6 @@ function init() {
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
 
-  //document.addEventListener('keydown', laserMovement)
   document.addEventListener('keydown', newLaser)
 
 
@@ -153,6 +152,7 @@ function init() {
   function startGame() {
     console.log('startgame ok')
 
+    clearInterval(timer)
     timer = setInterval(() => {
       console.log('interval')
 
@@ -162,7 +162,7 @@ function init() {
 
         //remove class for all
         enemies.forEach((item) => {
-          cells[item['position']].classList.remove(enemyClass)
+          cells[item['position']]?.classList.remove(enemyClass)
         })
 
         // move aliens sideways or down
@@ -174,10 +174,10 @@ function init() {
           } else if (enemyDir === 'goright') {
             item['position'] = item['position'] + 1
           }
-          console.log(enemyDir)
-          cells[item['position']].classList.add(enemyClass)
+          //add class again
+          cells[item['position']]?.classList.add(enemyClass)
         })
-
+        console.log('enemies', enemies.map(e => e.position))
         //check borders
         if (enemies.filter(item => item.position % width === width - 1).length > 0) {  // at least one element exist that touches right
           enemyDir = 'touchright'
@@ -186,7 +186,9 @@ function init() {
         } else if (enemies.filter(item => item.position % width === 0).length > 0) { // " " " touches left
           enemyDir = 'touchleft'
           movesDownCounter += 1
-        } else if (enemies.filter(item => item.position > (width * width - 1)).length > 0) {
+        } else if (enemies.every(item => item.position > (width * width - width))) {
+          //} else if (enemies.filter(item => item.position > (width * width - 1)).length > 0) {// in last row - end of game
+          console.log('GAME OVER')
           clearInterval(timer)    //! doesn-t work
           console.log('GAMEOVER')  //! doesn-t work
         }
@@ -211,7 +213,7 @@ function init() {
         console.log('laser movement go')
         //remove
         laserArr.forEach((item) => {
-          console.log(item)
+          //console.log(item)
           cells[item['position']]?.classList.remove(laserClass)
         })
 
@@ -228,7 +230,7 @@ function init() {
             enemies = enemies.filter(item => item.position !== posit) // delete this alien from arr
             cells[posit].classList.remove(enemyClass)// delete enemy class from this cell
 
-          } else if (bombArr.filter(bomb => bomb.position === item.position).length > 0) {  //! doesn-t work
+          } else if (bombArr.filter(bomb => bomb.position === item.position).length > 0) {  //! check
             const posit = item.position
             item.position = -1  // delete this laser
             bombArr = bombArr.filter(bomb => bomb.position !== posit) // delete this bomb from arr
@@ -260,7 +262,7 @@ function init() {
 
         //move and delete if reaches bottom
         bombArr.forEach((item) => {
-          console.log(item)
+          //console.log(item)
           if (item.position > (width * width - 1)) { // remove it if reaches bottom of grid
             item.position = 100
           } else {
@@ -279,17 +281,17 @@ function init() {
         const rate = Math.floor(Math.random() * enemies.length * 2) //number between 0 and enemies*2 
         //console.log(enemies[rate].position + width)
         const enemyFiredLoc = enemies[rate]?.position + width
-        console.log(enemyFiredLoc + 'fireloc')
+        //console.log(enemyFiredLoc + 'fireloc')
         if (rate < enemies.length && !cells[enemyFiredLoc].classList.contains(enemyClass)) {//if there is no enemy below
           addItem(enemyFiredLoc, bombClass) //add class
           bombArr.push({ position: enemyFiredLoc }) // put in array with location
-          console.log(bombArr)
+          //console.log(bombArr)
         }
       }
       newBomb()
 
 
-    }, 2000)
+    }, 200)
 
 
   }
