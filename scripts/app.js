@@ -13,6 +13,11 @@ function init() {
   const highSpan = document.getElementById('high') //grab high score span
   highSpan.innerHTML = bestScore //show high score
 
+  //screen game over
+  const GameOverScreen = document.getElementById('gameOver')
+  const show = 'show'
+  let finalSpan = document.getElementById('final')
+
   //!EVENTS
   startButton.addEventListener('click', startGame)
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
@@ -53,7 +58,7 @@ function init() {
 
   //shooting lasers
   const laserClass = 'laser'
-  const laserArr = []
+  let laserArr = []
 
   //bombs
   const bombClass = 'bomb'
@@ -167,7 +172,10 @@ function init() {
   //!  function startGame + TIMER  
 
   function startGame(event) {
-    event.target.blur()
+    if (event) {
+      event.target.blur()
+    }
+    
     console.log('startgame ok')
 
     clearInterval(timer)
@@ -202,10 +210,9 @@ function init() {
         if (enemies.some(item => item.position >= width * width - width)) {
           //} else if (enemies.filter(item => item.position > (width * width - 1)).length > 0) {// in last row - end of game
           console.log('GAME OVER')
-          alert('GAME OVER')
           clearInterval(timer)
-
-          //! stuff to happen after
+          gameLost()
+          //! GAME OVER LOST
         }
 
 
@@ -266,6 +273,7 @@ function init() {
             if (enemies.length === 0) { // no more enemies left
               console.log('ALL ENEMIES KILLED')
               clearInterval(timer)
+              replay()
               //! screen/new level here
             }
 
@@ -315,6 +323,7 @@ function init() {
             if (lives === 0) {
               console.log('GAME OVER 0 LIVES')
               clearInterval(timer)
+              gameLost() //! GAMEOVER SCREEN
             }
           }
         })
@@ -343,10 +352,23 @@ function init() {
 
   }
 
-  function endGame(){
+  function replay(){
     clearInterval(timer)
-    
+    playerCurrentPosition = PlayerStartingPosition
+    laserArr = []
+    bombArr = []
+    placeEnemy()
 
+
+    // startGame()
+  }
+
+  function gameLost(){
+    GameOverScreen.classList.add(show)
+    finalSpan.innerHTML = currentScore
+    setTimeout(() => {
+      location.reload()
+    }, 1000 * 10)
   }
 
 

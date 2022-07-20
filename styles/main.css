@@ -1,11 +1,14 @@
 @font-face {
   font-family: 'Ringbearer';
-  src: url(/fonts/Ringbearer.ttf);
+  src: url(../fonts/Ringbearer.ttf);
 }
-
 @font-face {
   font-family: 'Hobbiton';
-  src: url(/fonts/HobbitonBrushhand.ttf);
+  src: url(../fonts/HobbitonBrushhand.ttf);
+}
+@font-face {
+  font-family: 'Anir';
+  src: url(../fonts/anir.ttf);
 }
 
 
@@ -70,7 +73,8 @@ section {
 }
 
 #info {
-  font-family: HobbHobbiton, serif;
+  font-family: 'Anir', serif;
+  font-size: 1rem;
   color: gold;
   margin-bottom: 60px;
 }
@@ -90,7 +94,7 @@ button {
   /* background-image:linear-gradient(rgba(165, 163, 71, 0.486), rgba(165, 163, 71, 0.486)),  url(../images/seamless-grass.jpeg); */
   border: 6px solid gold;
   border-style: ridge;
-
+  position: relative;
   display: flex;
   width: 70vh;
   height: 70vh;
@@ -98,13 +102,31 @@ button {
   margin: 10px;
 }
 
-.grid div {
+.grid div:not(#gameOver) {
   background-image: url(../images/20220720_130047_0000.png);
   background-size: cover;
   height: 10%;
   width: 10%;
   border: none;
 
+}
+#gameOver {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  background-image: url(../images/gameOver.jpg);
+  background-size: cover;
+  text-align: center;
+  color: rgb(255, 60, 0);
+  padding: 30px;
+}
+
+#gameOver.show {
+  display: block;
+  
 }
 
 /* .grid div:first-of-type {
