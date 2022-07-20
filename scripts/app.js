@@ -7,13 +7,16 @@ function init() {
   let livesSpan = document.getElementById('lives')
   //score span
   let currentScoreSpan = document.getElementById('currentScore')
-  //high score span LATER
+
+  //high score span
+  let bestScore = localStorage.getItem('score')// from local storage
+  const highSpan = document.getElementById('high') //grab high score span
+  highSpan.innerHTML = bestScore //show high score
 
   //!EVENTS
   startButton.addEventListener('click', startGame)
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
-
   document.addEventListener('keydown', newLaser)
 
 
@@ -31,14 +34,14 @@ function init() {
   const playerClass = 'player'
 
   //enemy choice 
-  const enemyChoice = ['demogorgon', 'mindFlayer'] //array with available enemies
+  const enemyChoice = ['orc', 'mindFlayer'] //array with available enemies
 
   let enemyClass = enemyChoice[0] // must change: array of enemies
   console.log(enemyClass + 'enemyclass')
 
   //enemy positions 
   let enemies = []
-  const enemyStartingPosition = [1, 2, 3, 4, 5]// array of starting positions
+  const enemyStartingPosition = [ 2, 3, 4, 5,6,7,13,16]// array of starting positions
   // put for every position an alien as an object in array, with position and index as keys
   enemyStartingPosition.forEach((item, i) => {
     enemies[i] = { position: enemyStartingPosition[i], ind: i }
@@ -59,6 +62,7 @@ function init() {
   //score
   const enemyPoints = 100//each enemy
   let currentScore = 0 // to be added to + displayed
+  currentScoreSpan.innerText = currentScore
   //high score -  local storage -> mole
 
 
@@ -68,6 +72,9 @@ function init() {
 
   //timer
   let timer
+
+  // explosion
+  const explosionClass = 'explosion' 
 
   //? FUNCTIONS
 
@@ -145,14 +152,26 @@ function init() {
   }
   createGrid()
 
+  function explode (position){
+    cells[position].classList.add(explosionClass)
+    setTimeout(() => {
+      cells[position].classList.remove(explosionClass)
+    }, 900);
+
+  }
+
+
+
 
 
   //!  function startGame + TIMER  
 
-  function startGame() {
+  function startGame(event) {
+    event.target.blur()
     console.log('startgame ok')
 
     clearInterval(timer)
+
     timer = setInterval(() => {
       console.log('interval')
 
@@ -239,6 +258,10 @@ function init() {
             item.position = -1  // delete this laser
             enemies = enemies.filter(item => item.position !== posit) // delete this alien from arr
             cells[posit].classList.remove(enemyClass)// delete enemy class from this cell
+            explode(posit)
+            currentScore = currentScore + enemyPoints //add points to total
+            currentScoreSpan.innerHTML = currentScore // display total
+            if ( currentScore > bestScore) { localStorage.setItem('score', currentScore)} //add to high score
 
             if (enemies.length === 0) { // no more enemies left
               console.log('ALL ENEMIES KILLED')
@@ -266,7 +289,6 @@ function init() {
       }
       laserMovement()
 
-      // aliens array = 0 -> new level
 
       //ALIENS SHOOTING 
 
@@ -287,7 +309,6 @@ function init() {
 
           if (playerCurrentPosition === item.position) { // there is the player in new position 
             console.log('PLAYER HIT!')
-            const posit = item.position
             item.position = 100  // delete this bomb
             lives -= 1 // player has 1 less life
             livesSpan.innerHTML = lives
@@ -296,7 +317,6 @@ function init() {
               clearInterval(timer)
             }
           }
-
         })
 
         // add again
@@ -319,11 +339,16 @@ function init() {
       }
       newBomb()
 
-
-    }, 1000)
-
+    }, 900)
 
   }
+
+  function endGame(){
+    clearInterval(timer)
+    
+
+  }
+
 
 
 

@@ -1,49 +1,109 @@
-
-*{
-  box-sizing:border-box;
+@font-face {
+  font-family: 'Ringbearer';
+  src: url(/fonts/Ringbearer.ttf);
 }
+
+@font-face {
+  font-family: 'Hobbiton';
+  src: url(/fonts/HobbitonBrushhand.ttf);
+}
+
+
+
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  background-color: wheat;
+  /* background-color: wheat; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  
+  align-items: center;
+  background-image: linear-gradient(rgba(237, 228, 159, 0.7), rgba(237, 228, 159, 0.7)), url(../images/map.webp);
+  background-size: cover;
+
 
 }
+
+#title {
+  background-image: url(../images/title.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 6px solid gold;
+  border-style: ridge;
+  height: 15vh;
+  width: 70vh;
+  margin: 20px;
+}
+
+/* h1 {
+  background-color: #017100;
+  padding: 50px;
+  font-family: Ringbearer;
+  font-size: 50px;
+} */
 
 main {
-  width: 75vh;
-  background-color: cadetblue;
+  width: 100vh;
+
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 
 }
+
 section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 25%;
+  height: 70vh;
+  border: 6px solid gold;
+  border-style: ridge;
+  background-color: #017100;
+}
+
+#info {
+  font-family: HobbHobbiton, serif;
+  color: gold;
+  margin-bottom: 60px;
 }
 
 button {
-  height: 3vh;
+  padding: 30px 20px;
+  border: 3px solid gold;
+  border-radius: 70px;
+  box-shadow: 1px 1px 5px rgb(15, 57, 20);
+  background-color: #9ac12e;
+  font-family: Ringbearer;
+  font-size: 1rem;
+
 }
 
-.grid{
+.grid {
+  /* background-image:linear-gradient(rgba(165, 163, 71, 0.486), rgba(165, 163, 71, 0.486)),  url(../images/seamless-grass.jpeg); */
+  border: 6px solid gold;
+  border-style: ridge;
+
   display: flex;
   width: 70vh;
   height: 70vh;
   flex-wrap: wrap;
+  margin: 10px;
 }
 
 .grid div {
-  background-color: lightblue;
+  background-image: url(../images/20220720_130047_0000.png);
+  background-size: cover;
   height: 10%;
   width: 10%;
-  border: 1px solid lightsteelblue;
+  border: none;
 
 }
 
@@ -56,34 +116,26 @@ button {
 
 
 .player {
-  background-image: url(../images/eleven.jpg);
+  background-image: url(../images/playerlego.png) !important;
   background-size: cover;
 }
-	
-.demogorgon {
-  background-image: url(../images/demogorgon.jpg);
+
+.orc {
+  background-image: url(../images/enemylego.png) !important;
   background-size: cover;
 }
-	
+
 .explosion {
-  background-image: url(../images/explosion.jpeg);
+  background-image: url(../images/explosion.jpeg) !important;
   background-size: cover;
 }
-	
+
 .laser {
-  background-image: url(../images/laser_yellow.png);
+  background-image: url(../images/laserArrow.jpg) !important;
   background-size: cover;
 }
 
 .bomb {
-  background-image: url(../images/laser_red.png);
+  background-image: url(../images/bombArrow.jpeg) !important;
   background-size: cover;
 }
-
-
-
-
-
-
-
-
