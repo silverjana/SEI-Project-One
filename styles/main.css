@@ -69,17 +69,18 @@ section {
   height: 70vh;
   border: 6px solid gold;
   border-style: ridge;
-  background-color: #017100;
+  background-image: linear-gradient(rgba(1, 113, 0,0.6), rgba(1, 113, 0,0.9)), url(../images/Leaves\ of\ Lorien.jpeg);
+  background-repeat: repeat-y;
 }
 
 #info {
   font-family: 'Anir', serif;
   font-size: 1rem;
   color: gold;
-  margin-bottom: 60px;
+  margin-top: 50px;
 }
 
-button {
+#start {
   padding: 30px 20px;
   border: 3px solid gold;
   border-radius: 70px;
@@ -87,7 +88,18 @@ button {
   background-color: #9ac12e;
   font-family: Ringbearer;
   font-size: 1rem;
-
+}
+#reset {
+  padding: 20px 20px;
+  border: 2px solid gold;
+  border-style: ridge;
+  box-shadow: 1px 1px 5px rgb(15, 57, 20);
+  background-color:transparent;
+  font-family: Ringbearer;
+  font-size: 0.7rem;
+  margin-bottom: 70px;
+  margin-top: -10px;
+  color: gold;
 }
 
 .grid {
@@ -102,7 +114,7 @@ button {
   margin: 10px;
 }
 
-.grid div:not(#gameOver) {
+.grid div:not(#gameOver):not(#gameWon):not(#next) {
   background-image: url(../images/20220720_130047_0000.png);
   background-size: cover;
   height: 10%;
@@ -129,9 +141,36 @@ button {
   
 }
 
-/* .grid div:first-of-type {
+#gameWon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  background-image: url(../images/gameWon.png);
+  background-size: cover;
+}
 
-} */
+#gameWon.show {
+  display: block;
+}
+
+#next {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  background-image: url(../images/nextLevel.png);
+  background-size: cover;
+}
+#next.show {
+  display: block;
+}
+
+
 
 
 /* ANIMATION */
@@ -146,9 +185,13 @@ button {
   background-image: url(../images/enemylego.png) !important;
   background-size: cover;
 }
+.nazgul {
+  background-image: url(../images/nazgul.png) !important;
+  background-size: cover;
+}
 
 .explosion {
-  background-image: url(../images/explosion.jpeg) !important;
+  background-image: url(../images/explosionGrass.png) !important;
   background-size: cover;
 }
 
@@ -157,7 +200,12 @@ button {
   background-size: cover;
 }
 
-.bomb {
+.bomb { 
   background-image: url(../images/bombArrow.jpeg) !important;
+  background-size: cover;
+}
+
+.spear {
+  background-image: url(../images/spear.png) !important;
   background-size: cover;
 }

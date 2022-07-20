@@ -3,6 +3,8 @@ function init() {
   const grid = document.querySelector('.grid')
   //start button
   const startButton = document.getElementById('start')
+  //reset button
+  const resetButton = document.getElementById('reset')
   //lives span
   let livesSpan = document.getElementById('lives')
   //score span
@@ -17,9 +19,14 @@ function init() {
   const GameOverScreen = document.getElementById('gameOver')
   const show = 'show'
   let finalSpan = document.getElementById('final')
+  //screen game won
+  const GameWonScreen = document.getElementById('gameWon')
+  const nextScreen = document.getElementById('next')
+
 
   //!EVENTS
   startButton.addEventListener('click', startGame)
+  resetButton.addEventListener('click', reset)
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
   document.addEventListener('keydown', newLaser)
@@ -39,7 +46,7 @@ function init() {
   const playerClass = 'player'
 
   //enemy choice 
-  const enemyChoice = ['orc', 'mindFlayer'] //array with available enemies
+  const enemyChoice = ['orc', 'nazgul'] //array with available enemies
 
   let enemyClass = enemyChoice[0] // must change: array of enemies
   console.log(enemyClass + 'enemyclass')
@@ -61,7 +68,7 @@ function init() {
   let laserArr = []
 
   //bombs
-  const bombClass = 'bomb'
+  let bombClass = 'bomb'
   let bombArr = []
 
   //score
@@ -78,10 +85,20 @@ function init() {
   //timer
   let timer
 
+  //level counter
+  let levelCounter = 0
+
   // explosion
   const explosionClass = 'explosion' 
 
+
   //? FUNCTIONS
+  // clear storage - high score, level, reload
+  function reset(){
+    localStorage.clear()
+    levelCounter = 0
+    location.reload()
+  }
 
   // add Item
   function addItem(position, item) {
@@ -139,7 +156,7 @@ function init() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
       // Add innerText to cell for development purposes
-      cell.innerText = i
+      //cell.innerText = i
       // add index to a data attribute on the element
       cell.dataset.index = i
       // Add cell element into the cells array
@@ -272,9 +289,16 @@ function init() {
 
             if (enemies.length === 0) { // no more enemies left
               console.log('ALL ENEMIES KILLED')
+              //levelCounter += 1
               clearInterval(timer)
-              replay()
-              //! screen/new level here
+              // if (levelCounter < 1){
+              //   replay()
+              // } else {
+              //   gameWon()
+              // }
+              gameWon()
+              
+              //! GAME WON / LEVEL SCREEN
             }
 
           } else if (bombArr.filter(bomb => bomb.position === item.position).length > 0) {  //! check
@@ -352,16 +376,21 @@ function init() {
 
   }
 
-  function replay(){
-    clearInterval(timer)
-    playerCurrentPosition = PlayerStartingPosition
-    laserArr = []
-    bombArr = []
-    placeEnemy()
-
-
-    // startGame()
-  }
+  // function replay(){
+  //   clearInterval(timer)
+  //   playerCurrentPosition = PlayerStartingPosition
+  //   enemyClass = enemyChoice[1]
+  //   bombClass = 'spear'
+  //   laserArr = []
+  //   bombArr = []
+  //   createGrid()
+  //   placeEnemy()
+  //   nextScreen.classList.add(show)
+  //   setTimeout(() => {
+  //     nextScreen.classList.remove(show)//hide screen div
+  //     startGame()
+  //   }, 1000 * 5)
+  // }
 
   function gameLost(){
     GameOverScreen.classList.add(show)
@@ -371,6 +400,10 @@ function init() {
     }, 1000 * 10)
   }
 
+  function gameWon(){
+    highSpan.innerHTML = bestScore
+    GameWonScreen.classList.add(show)
+  }
 
 
 
