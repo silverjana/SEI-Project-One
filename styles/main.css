@@ -2,10 +2,12 @@
   font-family: 'Ringbearer';
   src: url(../fonts/Ringbearer.ttf);
 }
+
 @font-face {
   font-family: 'Hobbiton';
   src: url(../fonts/HobbitonBrushhand.ttf);
 }
+
 @font-face {
   font-family: 'Anir';
   src: url(../fonts/anir.ttf);
@@ -63,40 +65,48 @@ main {
 section {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content:space-around;
   align-items: center;
   width: 25%;
   height: 70vh;
   border: 6px solid gold;
   border-style: ridge;
-  background-image: linear-gradient(rgba(1, 113, 0,0.6), rgba(1, 113, 0,0.9)), url(../images/Leaves\ of\ Lorien.jpeg);
+  background-image: linear-gradient(rgba(1, 113, 0, 0.6), rgba(1, 113, 0, 0.9)), url(../images/Leaves\ of\ Lorien.jpeg);
   background-repeat: repeat-y;
+  padding: 20px;
 }
 
 #info {
   font-family: 'Anir', serif;
   font-size: 1rem;
   color: gold;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 #start {
-  padding: 30px 20px;
+  margin-top: 10px;
+  padding: 30px 15px;
   border: 3px solid gold;
   border-radius: 70px;
   box-shadow: 1px 1px 5px rgb(15, 57, 20);
-  background-color: #9ac12e;
+  /* background-color: #9ac12e; */
+  background-image: linear-gradient(rgba(2, 113, 0, 0.8), rgba(1, 113, 0, 0.8)),  url(../images/door\ rune.jpg);
+  background-size: cover;
   font-family: Ringbearer;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  color: #012e00 ;
+  text-shadow: 2px 2px 4px gold;
+
 }
+
 #reset {
   padding: 20px 20px;
   border: 2px solid gold;
   border-style: ridge;
   box-shadow: 1px 1px 5px rgb(15, 57, 20);
-  background-color:transparent;
+  background-color: transparent;
   font-family: Ringbearer;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   margin-bottom: 70px;
   margin-top: -10px;
   color: gold;
@@ -122,6 +132,7 @@ section {
   border: none;
 
 }
+
 #gameOver {
   position: absolute;
   top: 0;
@@ -138,7 +149,7 @@ section {
 
 #gameOver.show {
   display: block;
-  
+
 }
 
 #gameWon {
@@ -166,6 +177,7 @@ section {
   background-image: url(../images/nextLevel.png);
   background-size: cover;
 }
+
 #next.show {
   display: block;
 }
@@ -182,9 +194,10 @@ section {
 }
 
 .orc {
-  background-image: url(../images/enemylego.png) !important;
+  background-image: url(../images/orc\ lighter.png) !important;
   background-size: cover;
 }
+
 .nazgul {
   background-image: url(../images/nazgul.png) !important;
   background-size: cover;
@@ -200,7 +213,7 @@ section {
   background-size: cover;
 }
 
-.bomb { 
+.bomb {
   background-image: url(../images/bombArrow.jpeg) !important;
   background-size: cover;
 }
