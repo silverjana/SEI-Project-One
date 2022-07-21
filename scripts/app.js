@@ -53,7 +53,7 @@ function init() {
 
   //enemy positions 
   let enemies = []
-  const enemyStartingPosition = [ 2, 3, 4, 5,6,7,13,16]// array of starting positions
+  const enemyStartingPosition = [2, 3, 4, 5, 6, 7, 13, 16]// array of starting positions
   // put for every position an alien as an object in array, with position and index as keys
   enemyStartingPosition.forEach((item, i) => {
     enemies[i] = { position: enemyStartingPosition[i], ind: i }
@@ -89,12 +89,12 @@ function init() {
   let levelCounter = 0
 
   // explosion
-  const explosionClass = 'explosion' 
+  const explosionClass = 'explosion'
 
 
   //? FUNCTIONS
   // clear storage - high score, level, reload
-  function reset(){
+  function reset() {
     localStorage.clear()
     levelCounter = 0
     location.reload()
@@ -174,7 +174,7 @@ function init() {
   }
   createGrid()
 
-  function explode (position){
+  function explode(position) {
     cells[position].classList.add(explosionClass)
     setTimeout(() => {
       cells[position].classList.remove(explosionClass)
@@ -192,7 +192,7 @@ function init() {
     if (event) {
       event.target.blur()
     }
-    
+
     console.log('startgame ok')
 
     clearInterval(timer)
@@ -285,19 +285,22 @@ function init() {
             explode(posit)
             currentScore = currentScore + enemyPoints //add points to total
             currentScoreSpan.innerHTML = currentScore // display total
-            if ( currentScore > bestScore) { localStorage.setItem('score', currentScore)} //add to high score
+            if (currentScore > bestScore) { localStorage.setItem('score', currentScore) } //add to high score
 
             if (enemies.length === 0) { // no more enemies left
               console.log('ALL ENEMIES KILLED')
-              //levelCounter += 1
+
+              levelCounter += 1
+
               clearInterval(timer)
-              // if (levelCounter < 1){
-              //   replay()
-              // } else {
-              //   gameWon()
-              // }
-              gameWon()
-              
+
+              if (levelCounter < 2) {
+                replay()
+              } else {
+                gameWon()
+              }
+              //gameWon()
+
               //! GAME WON / LEVEL SCREEN
             }
 
@@ -376,31 +379,40 @@ function init() {
 
   }
 
-  // function replay(){
-  //   clearInterval(timer)
-  //   playerCurrentPosition = PlayerStartingPosition
-  //   enemyClass = enemyChoice[1]
-  //   bombClass = 'spear'
-  //   laserArr = []
-  //   bombArr = []
-  //   createGrid()
-  //   placeEnemy()
-  //   nextScreen.classList.add(show)
-  //   setTimeout(() => {
-  //     nextScreen.classList.remove(show)//hide screen div
-  //     startGame()
-  //   }, 1000 * 5)
-  // }
+  function replay() {
 
-  function gameLost(){
+    nextScreen.classList.add(show) //show next level screen
+
+    cells.forEach(item => item.classList.remove(enemyClass, playerClass, laserClass, bombClass))  //remove everything
+    enemyClass = enemyChoice[1] //change class
+
+    laserArr = []  //clear arms
+    bombArr = []
+    bombClass = 'spear' //change class
+    
+
+    setTimeout(() => {
+      nextScreen.classList.remove(show)//hide screen div
+      //place player + enemies on grid
+      addItem(playerCurrentPosition, playerClass)
+      enemyStartingPosition.forEach((item, i) => {   // put enemies in enemy array
+        enemies[i] = { position: enemyStartingPosition[i] }
+      })
+      placeEnemy()
+      playerCurrentPosition = PlayerStartingPosition // put player back
+      startGame()
+    }, 1000 * 4)
+  }
+
+  function gameLost() {
     GameOverScreen.classList.add(show)
     finalSpan.innerHTML = currentScore
     setTimeout(() => {
       location.reload()
-    }, 1000 * 10)
+    }, 1000 * 5)
   }
 
-  function gameWon(){
+  function gameWon() {
     highSpan.innerHTML = bestScore
     GameWonScreen.classList.add(show)
   }
