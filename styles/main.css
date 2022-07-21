@@ -14,8 +14,6 @@
 }
 
 
-
-
 * {
   box-sizing: border-box;
 }
@@ -30,7 +28,6 @@ body {
   align-items: center;
   background-image: linear-gradient(rgba(237, 228, 159, 0.7), rgba(237, 228, 159, 0.7)), url(../images/map.webp);
   background-size: cover;
-
 
 }
 
@@ -157,7 +154,7 @@ section {
   right: 0;
   bottom: 0;
   display: none;
-  background-image: url(../images/Game\ won.png);
+  background-image: url(../images/gameWon.png);
   background-size: cover;
 }
 

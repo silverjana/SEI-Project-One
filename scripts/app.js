@@ -92,6 +92,8 @@ function init() {
   // explosion
   const explosionClass = 'explosion'
 
+  let time = 900
+
 
   //? FUNCTIONS
   // clear storage - high score, level, reload
@@ -388,7 +390,7 @@ function init() {
       }
       newBomb()
 
-    }, 900)
+    }, time)
 
   }
 
@@ -396,16 +398,14 @@ function init() {
   //? screens / levels
 
   function replay() {
-
     nextScreen.classList.add(show) //show next level screen
-
     cells.forEach(item => item.classList.remove(enemyClass, laserClass, bombClass))  //remove everything
     enemyClass = enemyChoice[1] //change class
 
     laserArr = []  //clear arms
     bombArr = []
     bombClass = 'spear' //change class
-    
+    time = 800 // faster
 
     setTimeout(() => {
       nextScreen.classList.remove(show)//hide screen div
