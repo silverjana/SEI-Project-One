@@ -65,22 +65,20 @@ main {
 section {
   display: flex;
   flex-direction: column;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
   width: 25%;
   height: 70vh;
   border: 6px solid gold;
   border-style: ridge;
-  background-image: linear-gradient(rgba(1, 113, 0, 0.6), rgba(1, 113, 0, 0.9)), url(../images/Leaves\ of\ Lorien.jpeg);
-  background-repeat: repeat-y;
+  background-image: linear-gradient(rgba(1, 113, 0, 0.9), rgba(1, 113, 0, 0.6)), url(../images/Leaves\ of\ Lorien.jpeg);
+  background-repeat: repeat;
   padding: 20px;
-}
 
-#info {
+
   font-family: 'Anir', serif;
-  font-size: 1rem;
+  font-size: 1.5vh;
   color: gold;
-  margin-top: 40px;
 }
 
 #start {
@@ -90,13 +88,13 @@ section {
   border-radius: 70px;
   box-shadow: 1px 1px 5px rgb(15, 57, 20);
   /* background-color: #9ac12e; */
-  background-image: linear-gradient(rgba(2, 113, 0, 0.8), rgba(1, 113, 0, 0.8)),  url(../images/door\ rune.jpg);
+  background-image: linear-gradient(rgba(131, 166, 34, 0.7), rgba(131, 166, 34, 0.7)), url(../images/door\ rune.jpg);
   background-size: cover;
   font-family: Ringbearer;
   font-size: 1.2rem;
-  color: #012e00 ;
+  color: #012e00;
   text-shadow: 2px 2px 4px gold;
-
+  cursor: pointer;
 }
 
 #reset {
@@ -108,8 +106,8 @@ section {
   font-family: Ringbearer;
   font-size: 0.8rem;
   margin-bottom: 70px;
-  margin-top: -10px;
   color: gold;
+  cursor: pointer;
 }
 
 .grid {

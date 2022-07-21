@@ -25,11 +25,12 @@ function init() {
 
 
   //!EVENTS
-  startButton.addEventListener('click', startGame)
+  startButton.addEventListener('click', startGame, { once: true }) // added once true
+
   resetButton.addEventListener('click', reset)
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
-  document.addEventListener('keydown', newLaser)
+  
 
 
   //!EXECUTION
@@ -140,8 +141,8 @@ function init() {
     if (spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)) {
       addItem(firedLocation, laserClass)
       laserArr.push({ position: playerCurrentPosition - width, ind: laserArr.length })
-
-      console.log(laserArr)
+      playAudio('arrow')
+      //console.log(laserArr)
     }
   }
 
@@ -193,6 +194,7 @@ function init() {
       event.target.blur()
     }
 
+    document.addEventListener('keydown', newLaser) // No shooting before start
     console.log('startgame ok')
 
     clearInterval(timer)
@@ -277,7 +279,8 @@ function init() {
             item.position = -1
 
           } else if (enemies.filter(alien => alien.position === item.position).length > 0) { // there is an enemy in that position 
-            console.log('BOTH HERE!')
+            //console.log('BOTH HERE!')
+            playAudio('hit')
             const posit = item.position
             item.position = -1  // delete this laser
             enemies = enemies.filter(item => item.position !== posit) // delete this alien from arr
@@ -295,8 +298,14 @@ function init() {
               clearInterval(timer)
 
               if (levelCounter < 2) {
+                setTimeout(() => {
+                  playAudio('level')
+                }, 500)
                 replay()
               } else {
+                setTimeout(() => {
+                  playAudio('veryOldFriends')
+                }, 500)
                 gameWon()
               }
               //gameWon()
@@ -344,12 +353,16 @@ function init() {
 
           if (playerCurrentPosition === item.position) { // there is the player in new position 
             console.log('PLAYER HIT!')
+            playAudio('life')
             item.position = 100  // delete this bomb
             lives -= 1 // player has 1 less life
             livesSpan.innerHTML = lives
             if (lives === 0) {
               console.log('GAME OVER 0 LIVES')
               clearInterval(timer)
+              setTimeout(() => {
+                playAudio('gameover')
+              }, 500)
               gameLost() //! GAMEOVER SCREEN
             }
           }
@@ -379,11 +392,14 @@ function init() {
 
   }
 
+
+  //? screens / levels
+
   function replay() {
 
     nextScreen.classList.add(show) //show next level screen
 
-    cells.forEach(item => item.classList.remove(enemyClass, playerClass, laserClass, bombClass))  //remove everything
+    cells.forEach(item => item.classList.remove(enemyClass, laserClass, bombClass))  //remove everything
     enemyClass = enemyChoice[1] //change class
 
     laserArr = []  //clear arms
@@ -399,7 +415,6 @@ function init() {
         enemies[i] = { position: enemyStartingPosition[i] }
       })
       placeEnemy()
-      playerCurrentPosition = PlayerStartingPosition // put player back
       startGame()
     }, 1000 * 4)
   }
@@ -409,7 +424,7 @@ function init() {
     finalSpan.innerHTML = currentScore
     setTimeout(() => {
       location.reload()
-    }, 1000 * 5)
+    }, 1000 * 11)
   }
 
   function gameWon() {
@@ -417,6 +432,13 @@ function init() {
     GameWonScreen.classList.add(show)
   }
 
+  //? audio play
+  const audio = document.querySelector('audio')
+
+  function playAudio(song) {
+    audio.src = `sounds/${song}.wav`
+    audio.play()
+  }
 
 
 }
