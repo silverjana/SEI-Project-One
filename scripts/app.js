@@ -30,7 +30,7 @@ function init() {
   resetButton.addEventListener('click', reset)
   //document.addEventListener('keydown', moveEnemyKeys) //listen for keys
   document.addEventListener('keydown', movePlayer)
-  
+
 
 
   //!EXECUTION
@@ -54,7 +54,7 @@ function init() {
 
   //enemy positions 
   let enemies = []
-  const enemyStartingPosition = [2, 3, 4, 5, 6, 7, 13, 16]// array of starting positions
+  let enemyStartingPosition = [2, 3, 4, 5, 6, 7, 13, 16]// array of starting positions
   // put for every position an alien as an object in array, with position and index as keys
   enemyStartingPosition.forEach((item, i) => {
     enemies[i] = { position: enemyStartingPosition[i], ind: i }
@@ -146,7 +146,7 @@ function init() {
       addItem(firedLocation, laserClass)
       laserArr.push({ position: playerCurrentPosition - width, ind: laserArr.length })
       playAudio('arrow')
-      laserCounter++ 
+      laserCounter++
       console.log(laserCounter)
     }
   }
@@ -187,9 +187,22 @@ function init() {
     }, 900);
 
   }
-
-
-
+  
+  // player name window/grab/show
+  let playerName
+  if (!localStorage.name) {
+    playerName = window.prompt(
+      'Hello player! Enter your fancy elvish name :', 'Legolas'
+    )
+    localStorage.setItem('name', playerName)
+  } else {
+    playerName = localStorage.getItem('name')// from local storage
+  }
+  bestScore = localStorage.getItem('score')// from local storage
+  const nameSpan = document.getElementById('name') //grab name span
+  const playerNameSpan = document.getElementById('playerName') // "
+  nameSpan.innerHTML = playerName //show name in span
+  playerNameSpan.innerHTML = playerName // "
 
 
   //!  function startGame + TIMER  
@@ -238,7 +251,7 @@ function init() {
           console.log('GAME OVER')
           clearInterval(timer)
           gameLost()
-          //! GAME OVER LOST
+          //! GAME OVER - LOST
         }
 
 
@@ -305,12 +318,12 @@ function init() {
               if (levelCounter < 2) {
                 setTimeout(() => {
                   playAudio('level')
-                }, 500)
-                replay()
+                }, 400)
+                levelTwo()
               } else {
                 setTimeout(() => {
                   playAudio('veryOldFriends')
-                }, 500)
+                }, 400)
                 gameWon()
               }
               //gameWon()
@@ -368,7 +381,7 @@ function init() {
               setTimeout(() => {
                 playAudio('gameover')
               }, 500)
-              gameLost() //! GAMEOVER SCREEN
+              gameLost() //! GAMEOVER - LIFE
             }
           }
         })
@@ -400,7 +413,7 @@ function init() {
 
   //? screens / levels
 
-  function replay() {
+  function levelTwo() {
     nextScreen.classList.add(show) //show next level screen
     cells.forEach(item => item.classList.remove(enemyClass, laserClass, bombClass))  //remove everything
     enemyClass = enemyChoice[1] //change class
@@ -414,6 +427,7 @@ function init() {
       nextScreen.classList.remove(show)//hide screen div
       //place player + enemies on grid
       addItem(playerCurrentPosition, playerClass)
+      enemyStartingPosition = [2, 4, 6, 8, 13, 15, 17, 24, 26]
       enemyStartingPosition.forEach((item, i) => {   // put enemies in enemy array
         enemies[i] = { position: enemyStartingPosition[i] }
       })
