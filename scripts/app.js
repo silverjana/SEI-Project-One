@@ -67,6 +67,7 @@ function init() {
   //shooting lasers
   const laserClass = 'laser'
   let laserArr = []
+  let laserCounter = 0
 
   //bombs
   let bombClass = 'bomb'
@@ -141,11 +142,12 @@ function init() {
     const firedLocation = playerCurrentPosition - width
     //console.log(firedLocation + 'firedlocation')
     // if space pressed and cell free, add laser, push item into laserArray 
-    if (spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)) {
+    if (laserCounter < 2 && spaceKey === keyPressed && !cells[firedLocation].classList.contains(laserClass)) {
       addItem(firedLocation, laserClass)
       laserArr.push({ position: playerCurrentPosition - width, ind: laserArr.length })
       playAudio('arrow')
-      //console.log(laserArr)
+      laserCounter++ 
+      console.log(laserCounter)
     }
   }
 
@@ -205,8 +207,10 @@ function init() {
     timer = setInterval(() => {
       console.log('interval')
 
-      //move enemy
+      //reset lasercounter
+      laserCounter = 0
 
+      //move enemy
       function moveEnemy() {  //
 
         //remove class for all
@@ -248,8 +252,6 @@ function init() {
           enemyDir = 'touchleft'
           movesDownCounter += 1
         }
-
-
 
         // after moving down once, move sideways next
         if (enemyDir === 'touchright' && movesDownCounter > 1) {
