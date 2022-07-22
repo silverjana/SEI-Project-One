@@ -92,7 +92,8 @@ function init() {
   // explosion
   const explosionClass = 'explosion'
 
-  let time = 900
+  //interval
+  let time = 800
 
 
   //? FUNCTIONS
@@ -405,7 +406,7 @@ function init() {
     laserArr = []  //clear arms
     bombArr = []
     bombClass = 'spear' //change class
-    time = 800 // faster
+    time = 700 // faster
 
     setTimeout(() => {
       nextScreen.classList.remove(show)//hide screen div
