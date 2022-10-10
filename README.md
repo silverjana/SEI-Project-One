@@ -76,17 +76,17 @@ Suggested enhancements
 
 ## Planning
 
-I started with a rough sketch of the game 
+I started with a rough Excalidraw sketch of the game  
 
-PIC
+<img src="https://i.imgur.com/gabDjuP.png" alt="excalidraw sketch" width="250"/>
  
 and some very basic HTML, just to be able to have something to see on the browser while working on JavaScript.
 
-**h1
-section
-   start button
-   div   
-score, lives
+**h1  
+section  
+&nbsp;&nbsp;start button  
+&nbsp;&nbsp;div     
+&nbsp;&nbsp;&nbsp;&nbsp;score, lives  
 div.grid**
 
 
@@ -103,7 +103,7 @@ Then I made a bullet point list of all the functions I needed for a basic versio
 
 I then started on a rough draft of the JS ( pseudocoding)
 
-PIC
+<img src="https://i.imgur.com/cU1GWGG.png" alt="pseudocode" width="1050"/>
 
 ## Process
 
@@ -115,12 +115,14 @@ Rough plan of dynamics and elements
 Detailed wire-framing of the project that got approved.
 Wrote basic HTML:
 
-PIC
+<img src="https://i.imgur.com/xOEuFs4.png" alt="html" width="550"/>
 
 Basic CSS with all the classes to display player/ enemies/lasers with placeholder images.
 Started with simple functions in JS:
 
-Added elements and events (I had all on keydown instead of timer, easier to check frequently while coding:  )  
+Added elements and events (I had all on keydown instead of timer, easier to check frequently while coding )  
+<img src="https://i.imgur.com/wINWWTY.png" alt="keydown" width="550"/>
+
 Started on functions:
 * created grid
 * created enemies
@@ -143,7 +145,12 @@ Started on a visual concept for the game in CSS, very rough colour scheme and fl
 Player laser added and moving upwards
 If laser hits something, both classes get removed:
 No more enemies -> level is over  
+
+<img src="https://i.imgur.com/qvX7wEw.png" alt="laser" width="750"/>
+
 Added explosion effect  
+
+<img src="https://i.imgur.com/fiYWnHg.png" alt="explosion" width="450"/>
 
 All interactions work  
 Added a score counter  
@@ -176,29 +183,35 @@ Added name request
 
 
 ## Final Product
-
-PICS
+<img src="https://i.imgur.com/aupKBH9.png" alt="screenshot" width="500"/><img src="https://i.imgur.com/NV8hkwB.png" alt="screenshot" width="450"/>
+<img src="https://i.imgur.com/RbQpneB.png" alt="screenshot" width="450"/><img src="https://i.imgur.com/B0pY0Zx.png" alt="screenshot" width="450"/>
+<img src="https://i.imgur.com/t68m5Zo.png" alt="screenshot" width="450"/>
 
 ### Challenges:
 
-I encountered an Issue with moving enemies in a group, as when removing, moving and adding the class all in one loop, removing the i+1  enemy would also remove the previously moved i enemy (now in the i+1 cell), and only the last enemy would remain on the grid. I had to write separate loops for removing, moving and then adding again :
-Then, I had to move the enemy rotating between 3 directions : down, right, down, left, down, right etc, and had to find a way to move down only once when touching the sides and then right or left to the other side. So I added a counter for moving down only once, and then started moving sideways until one enemy touched the opposite side.
+I encountered an Issue with moving enemies in a group, as when removing, moving and adding the class all in one loop, removing the i+1  enemy would also remove the previously moved i enemy (now in the i+1 cell), and only the last enemy would remain on the grid. I had to write separate loops for removing, moving and then adding again:  
+<img src="https://i.imgur.com/qNOJkip.png" alt="screenshot" width="450"/>
 
-+PICS
+Then, I had to move the enemy rotating between 3 directions : down, right, down, left, down, right etc, and had to find a way to move down only once when touching the sides and then right or left to the other side. So I added a counter for moving down only once, and then started moving sideways until one enemy touched the opposite side.  
+<img src="https://i.imgur.com/8gW0Wkg.png" alt="screenshot" width="450"/>  
++   
+<img src="https://i.imgur.com/mMuoDeC.png" alt="screenshot" width="800"/>  
 
 While testing the gameplay I realized that there was a bug with the Audio element of the screens, as it didn’t play music when arrows got shot too close to the game over and the sounds would overlap. I added a timer to the music to avoid that and also to give the screen image the fraction of time it needs to load.
 
-
+<img src="https://i.imgur.com/7wK2bI4.png" alt="screenshot" width="310"/>
 
 ### Wins:
 
 Even after just 3 weeks of lessons I built a working game and I solved all the issues I encountered while coding.
 I am really happy I managed to build the game as I planned, and had the time to add some stretch goals like the player name window prompt, a second level and the screens with music.
-I am also very satisfied with the styling, as I really enjoyed learning CSS during class, and I liked to play with gradients and borders to get the look I wanted, like on this side menu:
+I am also very satisfied with the styling, as I really enjoyed learning CSS during class, and I liked to play with gradients and borders to get the look I wanted, like on this side menu:  
+<img src="https://i.imgur.com/ihYihnM.png" alt="screenshot" width="250"/><img src="https://i.imgur.com/bWKdqMl.png" alt="screenshot" width="700"/>
 
 
+The screens were also something I never did before, I created them on Canvas, placed them with position:absolute  and shoved them by adding a show class to the element when needed.  
 
-The screens were also something I never did before, I created them on Canvas, placed them with position:absolute  and shoved them by adding a show class to the element when needed.
+<img src="https://i.imgur.com/lCTPbhF.png" alt="screenshot" width="450"/>
 
 ### Key Learnings/Takeaways:
 
